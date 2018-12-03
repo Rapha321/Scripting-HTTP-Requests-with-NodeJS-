@@ -1,7 +1,9 @@
-function getAndPrintHTMLChunks () {
+
+function getAndPrintHTML () {
 
   // while https is built-in to Node, it is a module, so it must be required
-  var https = require('https');
+ var https = require('https');
+
 
   // the host can be thought of as the domain name you want to read from,
   // and the path is the resource - '/' is the root path, but if you wanted to read a
@@ -19,15 +21,15 @@ function getAndPrintHTMLChunks () {
     response.setEncoding('utf8');
 
     // the callback is invoked when a `data` chunk is received
+    let buffer = "";
     response.on('data', function (data) {
-      // let chunk = [];
-      // chunk.push(data);
-      console.log('Chunk Received. Length:', chunk + "/n");
+      buffer += data + '\n';
     });
 
     // the callback is invoked when all of the data has been received
     // (the `end` of the stream)
     response.on('end', function() {
+      console.log('Chunk Received. Length:', buffer);
       console.log('Response stream complete.');
     });
 
@@ -35,4 +37,4 @@ function getAndPrintHTMLChunks () {
 
 }
 
-getAndPrintHTMLChunks();
+getAndPrintHTML();
