@@ -1,9 +1,8 @@
 
-function getAndPrintHTML (options) {
+function getAndPrintHTML (options, callback) {
 
   // while https is built-in to Node, it is a module, so it must be required
- var https = require('https');
-
+  var https = require('https');
 
   // notice that https.get takes a callback with one parameter -
   // response, which is a Stream that represents the HTTP response
@@ -21,17 +20,24 @@ function getAndPrintHTML (options) {
     // the callback is invoked when all of the data has been received
     // (the `end` of the stream)
     response.on('end', function() {
-      console.log('Chunk Received. Length:', buffer);
-      console.log('Response stream complete.');
+      callback(buffer);
+      // console.log('Chunk Received. Length:', buffer);
+      // console.log('Response stream complete.');
     });
 
   });
 
 }
 
+
+function printHTML (html) {
+  console.log(html);
+}
+
+
 var requestOptions = {
   host: 'sytantris.github.io',
   path: '/http-examples/step1.html'
 };
 
-getAndPrintHTML(requestOptions);
+getAndPrintHTML(requestOptions, printHTML);
